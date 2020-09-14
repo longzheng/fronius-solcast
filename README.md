@@ -1,4 +1,8 @@
 # Upload Fronius inverter data to Solcast
+Automates sending historical Fronius generation power data to Solcast's "Measurements - Rooftop Site" API to perform tuning for a site to improve forecasts and observations over time.
+
+See Solcast API docs: https://docs.solcast.com.au/#measurements-rooftop-site
+
 
 ### How to run
 - Install NPM packages `npm install`

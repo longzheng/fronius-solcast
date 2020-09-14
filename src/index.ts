@@ -25,10 +25,10 @@ const main = async () => {
   for (const [key, value] of Object.entries(inverterData)) {
     measurements.push({
       period_end: new Date(
-        new Date(`${date} 00:00:00`).setSeconds(parseInt(key))
-      ).toISOString(),
-      period: "PT5M",
-      total_power: (value * 12) / 1000,
+        new Date(`${date} 00:00:00`).setSeconds(parseInt(key)) // add seconds to date
+      ).toISOString(), // convert to ISO string
+      period: "PT5M", // data is in 5min intervals
+      total_power: (value * 12) / 1000, // transform 5-min Wh to kWh (60min/5min=12)
     });
   }
 
