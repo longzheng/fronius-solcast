@@ -1,0 +1,1 @@
+{"version":3,"file":"solcast.js","sourceRoot":"","sources":["../src/solcast.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AAAA,kDAA0B;AAE1B,MAAM,cAAc,GAAG,4BAA4B,CAAC;AAEvC,QAAA,kBAAkB,GAAG,CAChC,UAAkB,EAClB,MAAc,EACd,YAAkC,EAClC,EAAE;IACF,MAAM,QAAQ,GAAG,MAAM,eAAK,CAAC,IAAI,CAC/B,GAAG,cAAc,kBAAkB,UAAU,yBAAyB,MAAM,EAAE,EAC9E;QACE,YAAY,EAAE,YAAY;KAC3B,CACF,CAAC;AACJ,CAAC,CAAA,CAAC"}
