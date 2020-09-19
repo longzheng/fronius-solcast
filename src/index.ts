@@ -8,6 +8,7 @@ const argv = yargs
     apiKey: { type: "string", demandOption: true },
     date: { type: "string", demandOption: false },
     inverterIp: { type: "string", demandOption: true },
+    updateInterval: {type: "number", demandOption: false}
   })
   .help()
   .alias("help", "h").argv;
@@ -16,8 +17,10 @@ const solcastSiteResourceId = argv.resourceId;
 const solcastApiKey = argv.apiKey;
 const date = argv.date || new Date().toISOString().split("T")[0];
 const inverterIp = argv.inverterIp;
+const updateInterval = argv.updateInterval;
 
 const main = async () => {
+  console.log(`Getting measurements from inverter for ${date}`)
   const inverterData = await getInverterData(inverterIp, date);
 
   let measurements: SolcastMeasurement[] = [];
@@ -32,7 +35,12 @@ const main = async () => {
     });
   }
 
+  console.log(`Updating ${measurements.length} measurements to Solcast for ${date}`)
   await uploadMeasurements(solcastSiteResourceId, solcastApiKey, measurements);
 };
 
 main();
+
+if (updateInterval) {
+  setInterval(main, updateInterval * 1000)
+}

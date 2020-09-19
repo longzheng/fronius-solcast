@@ -11,15 +11,15 @@ See Solcast API docs: https://docs.solcast.com.au/#measurements-rooftop-site
 $ node dist/index.js \
     --resourceId=[SOLCAST_SITE_RESOURCE_ID] \
     --apiKey=[SOLCAST_API_KEY] \
-    --inverterIp=[INVERTER_IP] \
-    --date=[REPORT_DATE]            
+    --inverterIp=[INVERTER_IP]
 ```
 
-### Arguments
-- `SOLCAST_SITE_RESOURCE_ID` - your Solcast site's Resource ID
-- `SOLCAST_API_KEY` - find your Solcast API Key here https://toolkit.solcast.com.au/account
-- `INVERTER_IP` - the IP address of your Fronius inverter (e.g. `192.168.1.100`)
-- `REPORT_DATE` (optional) - the date of measurements you want to upload in `YYYY-MM-DD` format (e.g. `2020-09-14`), otherwise defaults to current day
+#### Arguments
+- `resourceId` - your Solcast site's Resource ID
+- `apiKey` - find your Solcast API Key here https://toolkit.solcast.com.au/account
+- `inverterIp` - the IP address of your Fronius inverter (e.g. `192.168.1.100`)
+- `date` (optional) - the date of measurements you want to upload in `YYYY-MM-DD` format (e.g. `2020-09-14`), otherwise defaults to current day
+- `updateInterval` (optional) - continuously update Solcast with the current day's measurements, frequency in seconds (e.g. 1800 = every 30 minutes)
 
 
 ### How to compile
