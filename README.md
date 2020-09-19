@@ -5,6 +5,7 @@ See Solcast API docs: https://docs.solcast.com.au/#measurements-rooftop-site
 
 
 ### How to run
+- Install NPM packages `npm install`
 - Run with NodeJS
 
 ```
@@ -23,5 +24,4 @@ $ node dist/index.js \
 
 
 ### How to compile
-- Install NPM packages `npm install`
 - Compile with TypeScript `tsc`

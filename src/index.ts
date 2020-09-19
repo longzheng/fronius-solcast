@@ -1,6 +1,7 @@
 import { SolcastMeasurement, uploadMeasurements } from "./solcast";
 import { getInverterData } from "./fronius";
 import yargs from "yargs";
+import "log-timestamp";
 
 const argv = yargs
   .options({

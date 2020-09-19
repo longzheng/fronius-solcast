@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const solcast_1 = require("./solcast");
 const fronius_1 = require("./fronius");
 const yargs_1 = __importDefault(require("yargs"));
+require("log-timestamp");
 const argv = yargs_1.default
     .options({
     resourceId: { type: "string", demandOption: true },
