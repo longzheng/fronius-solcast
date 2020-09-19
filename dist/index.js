@@ -21,7 +21,7 @@ const argv = yargs_1.default
     apiKey: { type: "string", demandOption: true },
     date: { type: "string", demandOption: false },
     inverterIp: { type: "string", demandOption: true },
-    updateInterval: { type: "number", demandOption: false }
+    updateInterval: { type: "number", demandOption: false },
 })
     .help()
     .alias("help", "h").argv;
@@ -31,19 +31,24 @@ const date = argv.date || new Date().toISOString().split("T")[0];
 const inverterIp = argv.inverterIp;
 const updateInterval = argv.updateInterval;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(`Getting measurements from inverter for ${date}`);
-    const inverterData = yield fronius_1.getInverterData(inverterIp, date);
-    let measurements = [];
-    for (const [key, value] of Object.entries(inverterData)) {
-        measurements.push({
-            period_end: new Date(new Date(`${date} 00:00:00`).setSeconds(parseInt(key)) // add seconds to date
-            ).toISOString(),
-            period: "PT5M",
-            total_power: (value * 12) / 1000,
-        });
+    try {
+        console.log(`Getting measurements from inverter for ${date}`);
+        const inverterData = yield fronius_1.getInverterData(inverterIp, date);
+        let measurements = [];
+        for (const [key, value] of Object.entries(inverterData)) {
+            measurements.push({
+                period_end: new Date(new Date(`${date} 00:00:00`).setSeconds(parseInt(key)) // add seconds to date
+                ).toISOString(),
+                period: "PT5M",
+                total_power: (value * 12) / 1000,
+            });
+        }
+        console.log(`Updating ${measurements.length} measurements to Solcast for ${date}`);
+        yield solcast_1.uploadMeasurements(solcastSiteResourceId, solcastApiKey, measurements);
     }
-    console.log(`Updating ${measurements.length} measurements to Solcast for ${date}`);
-    yield solcast_1.uploadMeasurements(solcastSiteResourceId, solcastApiKey, measurements);
+    catch (e) {
+        console.error(`Error: ${e}`);
+    }
 });
 main();
 if (updateInterval) {
