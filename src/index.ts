@@ -6,7 +6,7 @@ const argv = yargs
   .options({
     resourceId: { type: "string", demandOption: true },
     apiKey: { type: "string", demandOption: true },
-    date: { type: "string", demandOption: true },
+    date: { type: "string", demandOption: false },
     inverterIp: { type: "string", demandOption: true },
   })
   .help()
@@ -14,7 +14,7 @@ const argv = yargs
 
 const solcastSiteResourceId = argv.resourceId;
 const solcastApiKey = argv.apiKey;
-const date = argv.date;
+const date = argv.date || new Date().toISOString().split("T")[0];
 const inverterIp = argv.inverterIp;
 
 const main = async () => {
