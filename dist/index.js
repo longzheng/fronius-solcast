@@ -28,23 +28,24 @@ const argv = yargs_1.default
     .alias("help", "h").argv;
 const solcastSiteResourceId = argv.resourceId;
 const solcastApiKey = argv.apiKey;
-const date = argv.date || new Date().toISOString().split("T")[0];
+const date = argv.date;
 const inverterIp = argv.inverterIp;
 const updateInterval = argv.updateInterval;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(`Getting measurements from inverter for ${date}`);
-        const inverterData = yield fronius_1.getInverterData(inverterIp, date);
+        let currentDate = date || new Date().toISOString().split("T")[0];
+        console.log(`Getting measurements from inverter for ${currentDate}`);
+        const inverterData = yield fronius_1.getInverterData(inverterIp, currentDate);
         let measurements = [];
         for (const [key, value] of Object.entries(inverterData)) {
             measurements.push({
-                period_end: new Date(new Date(`${date} 00:00:00`).setSeconds(parseInt(key)) // add seconds to date
+                period_end: new Date(new Date(`${currentDate} 00:00:00`).setSeconds(parseInt(key)) // add seconds to date
                 ).toISOString(),
                 period: "PT5M",
                 total_power: (value * 12) / 1000,
             });
         }
-        console.log(`Updating ${measurements.length} measurements to Solcast for ${date}`);
+        console.log(`Updating ${measurements.length} measurements to Solcast for ${currentDate}`);
         yield solcast_1.uploadMeasurements(solcastSiteResourceId, solcastApiKey, measurements);
     }
     catch (e) {

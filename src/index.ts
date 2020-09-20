@@ -16,21 +16,23 @@ const argv = yargs
 
 const solcastSiteResourceId = argv.resourceId;
 const solcastApiKey = argv.apiKey;
-const date = argv.date || new Date().toISOString().split("T")[0];
+const date = argv.date;
 const inverterIp = argv.inverterIp;
 const updateInterval = argv.updateInterval;
 
 const main = async () => {
   try {
-    console.log(`Getting measurements from inverter for ${date}`);
-    const inverterData = await getInverterData(inverterIp, date);
+    let currentDate = date || new Date().toISOString().split("T")[0];
+
+    console.log(`Getting measurements from inverter for ${currentDate}`);
+    const inverterData = await getInverterData(inverterIp, currentDate);
 
     let measurements: SolcastMeasurement[] = [];
 
     for (const [key, value] of Object.entries(inverterData)) {
       measurements.push({
         period_end: new Date(
-          new Date(`${date} 00:00:00`).setSeconds(parseInt(key)) // add seconds to date
+          new Date(`${currentDate} 00:00:00`).setSeconds(parseInt(key)) // add seconds to date
         ).toISOString(), // convert to ISO string
         period: "PT5M", // data is in 5min intervals
         total_power: (value * 12) / 1000, // transform 5-min Wh to kWh (60min/5min=12)
@@ -38,7 +40,7 @@ const main = async () => {
     }
 
     console.log(
-      `Updating ${measurements.length} measurements to Solcast for ${date}`
+      `Updating ${measurements.length} measurements to Solcast for ${currentDate}`
     );
     await uploadMeasurements(
       solcastSiteResourceId,
