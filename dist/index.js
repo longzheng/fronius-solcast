@@ -33,7 +33,10 @@ const inverterIp = argv.inverterIp;
 const updateInterval = argv.updateInterval;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let currentDate = date || new Date().toISOString().split("T")[0];
+        let currentDate = date ||
+            new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000) // get date in current timezone
+                .toISOString()
+                .split("T")[0];
         console.log(`Getting measurements from inverter for ${currentDate}`);
         const inverterData = yield fronius_1.getInverterData(inverterIp, currentDate);
         let measurements = [];

@@ -22,7 +22,11 @@ const updateInterval = argv.updateInterval;
 
 const main = async () => {
   try {
-    let currentDate = date || new Date().toISOString().split("T")[0];
+    let currentDate =
+      date ||
+      new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000) // get date in current timezone
+        .toISOString()
+        .split("T")[0];
 
     console.log(`Getting measurements from inverter for ${currentDate}`);
     const inverterData = await getInverterData(inverterIp, currentDate);
@@ -47,8 +51,8 @@ const main = async () => {
       solcastApiKey,
       measurements
     );
-  } catch(e) {
-    console.error(`Error: ${e}`)
+  } catch (e) {
+    console.error(`Error: ${e}`);
   }
 };
 
